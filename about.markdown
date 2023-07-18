@@ -10,7 +10,7 @@ permalink: /about/
 
 Hi there! I'm Andrea, an Educator turned Software Engineer.
 
-It's a major change, I know! Here in this space, I share about my career transition from Education to FinTech and how it is like embarking on a career switch in my 30s. I also like to ramble about ideas and topics that excite me, and the latest projects that I am working on! I sometimes also pen my thoughts on other interesting observations made in daily life. Enjoy your stay here!
+ It's a major change, I know! Here in this space, I share about my career transition from Education to FinTech and how it is like embarking on a career switch in my 30s. I also like to ramble about ideas and topics that excite me, and the latest projects that I am working on! I sometimes also pen my thoughts on other interesting observations made in daily life. Enjoy your stay here!
 
 ### What excites me:
 <div style="display: flex; justify-content: space-between;">
@@ -47,13 +47,5 @@ It's a major change, I know! Here in this space, I share about my career transit
         <p style="font-size: 14px;">I love sharing my knowledge and experiences, and to hear from fellow human beings on this
         common journey we share called Life.</p>
     </div>
-  </div>
-</div>
-<div style="display: flex; justify-content: center;">
-  <div style="margin: 0 10px; width: 50%;">
-    <!-- Third interest card code block -->
-  </div>
-  <div style="margin: 0 10px; width: 50%;">
-    <!-- Fourth interest card code block -->
   </div>
 </div>
