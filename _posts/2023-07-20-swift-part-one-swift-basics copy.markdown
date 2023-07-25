@@ -5,7 +5,7 @@ date:   2023-07-20 10:00:00 +0800
 categories: programming
 ---
 <p><i>
-In a four-part series, I attempt to journal some cool things I learnt about Swift, the iOS development language. I'm with the iOS development team in my new role and will have to pick up this language. My mentor at work told me that, "All languages are the same in semantics, they just differ in syntax." Really? I am frankly sceptical. Well, I am going to find out for myself. 
+In this four-part series, I attempt to journal some cool things I learnt about Swift, the iOS development language. I'm with the iOS development team in my new role and will have to pick up this language. My mentor at work told me that, "All languages are the same in semantics, they just differ in syntax." Really? I am frankly sceptical. Well, I am going to find out for myself. 
 </i></p>
 <p><i>
 Having been trained in Java as my primary programming language prior, Swift, from what I've gathered so far, seems like a different ball game altogether. I am frankly feeling rather intimidated by how expressive it is, bordering on being almost too wild. It will understandably be impossible to write about every single feature of Swift, so I will mostly document features that are new to me, that I did not learn in Java. 
@@ -28,8 +28,6 @@ What coffee shall I have today?
   - Einspänner */
 */
 {% endhighlight swift %}
-
-Wow I feel like ideas within ideas are being planted inside my head already. 
 
 Another cool feature is the triple forward slash (///) which documents a function. A quick way to do this is to highlight the function to be documented and hit Option + Command keys. Select 'add document' and Xcode will create a template for adding the documentation. Once documentation is complete, holding the Option key and clicking on function will display the documentation which is super useful.
 
@@ -91,21 +89,17 @@ var needCoffee = true
 needCoffee.toggle() // toggles the value of needCoffee from 'true' to 'false'
 {% endhighlight swift %}
 
-<p><b>6. Functions can have default parameters</b></p>
-In the example below, the quantity parameter has a default value 1. If unspecified, the function assumes a quantity of 1.
-{% highlight swift %}
-func orderCoffee(_ coffeeType: String, _ quantity: Int = 1) {
-    print("Preparing \(quantity) cup(s) of \(coffeeType)...")
-    // Add code to prepare the coffee here
-    print("Your \(coffeeType) is ready!")
-}
+<p><b>6. The Nil Coalescing Operator</b></p>
+Swift's nil coalescing operator denoted by ?? is a handy way to unwrap an optional. We can use it to get a value out of the optional no matter what. An example of how it can be used:
 
-orderCoffee("Cappuccino") // Ordering 1 cup of Cappuccino
-orderCoffee("Latte", 2) // Ordering 2 cups of Latte
+{% highlight swift %}
+var optionalInt: Int? = nil
+var mustHaveResult = optionalInt ?? 0
+print(mustHaveResult) // Prints 0 if the optional has no value
 {% endhighlight swift %}
 
 <p><b>7. Countable Ranges</b></p>
-Countable Ranges represent a sequence of <b>countable integers</b>. There are two types of Countable Ranges - open and half-open. One thing to remember is that ranges must always be increasing.
+Countable Ranges represent a sequence of <b>countable integers</b>. There are two types of Countable Ranges, open and half-open. One thing to remember is that ranges must always be increasing.
 
 {% highlight swift %}
 // Countable closed range
