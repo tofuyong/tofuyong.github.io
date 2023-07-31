@@ -5,7 +5,7 @@ date:   2023-07-20 10:00:00 +0800
 categories: programming
 ---
 <p><i>
-Swift functions are so full of quirks. At this point, 1 week into Swift, I can't quite decide if I love it or hate it.
+Swift functions are so full of quirks. At this point, 1 week into Swift, I am ambivalent about whether I love Swift or hate it.
 </i></p>
 
 <p><b>Quirky Swift functions</b></p>
@@ -72,7 +72,7 @@ func sayHello(to name: String) {
 The parameter is called 'to name', which means externally it’s called 'to', but internally it’s called 'name'. This gives variables a sensible name inside the function, and also means calling the function reads more naturally:
 
 {% highlight swift %}
-sayHello(to: "Taylor")
+sayHello(to: "Vino")
 {% endhighlight swift %}
 
 Swift even takes it a step further by allowing us to write our labels twice, like:
@@ -86,7 +86,81 @@ func setAge(for person: String, to value: Int) {
 When we call the function: 
 
 {% highlight swift %}
-setAge(for: "Paul", to: 40)
+setAge(for: "Brunello di Montalcino", to: 25)
 {% endhighlight swift %}
 
-The function becomes readable as a standard English statement: “Set age for Paul to 40”. Using both internal and external labels is not a must, although our functions read more naturally when we have them. I'm quite amused by Swift's attempt to connect with the human programmer.
+The function becomes readable as a standard English statement: “Set age for Brunello di Montalcino to 25”. Using both internal and external labels is not a must, although our functions read more naturally when we have them. I'm quite amused by Swift's attempt to connect with the human programmer.
+
+<p><b>5. Mutating Functions</b></p>
+A mutating function is a special function that defined within a value type (such as a struct or enum) and is used to modify the properties of that value type. By default, functions defined within a value type are not allowed to modify the properties of the value type, but by marking a function as mutating, we are indicating that the function is able to modify the instance it is called on.
+
+Suppose we have a struct called CoffeeMachine, which has a coffeeAmount property representing the amount of coffee in the machine. We want to define a brewCoffee() method that simulates the brewing of fresh coffee (yum). The catch here is that the coffee machine has a fixed capacity, and we want to avoid exceeding it when making coffee.
+
+{% highlight swift %}
+struct CoffeeMachine {
+    var coffeeAmount: Int
+    let maxCapacity: Int
+
+    init(coffeeAmount: Int, maxCapacity: Int) {
+        self.coffeeAmount = coffeeAmount
+        self.maxCapacity = maxCapacity
+    }
+
+    mutating func brewCoffee(amount: Int) {
+        let remainingSpace = maxCapacity - coffeeAmount
+        if amount <= remainingSpace {
+            coffeeAmount += amount
+            print("Brewing \(amount) ml of coffee. Enjoy your coffee!")
+        } else {
+            print("Not enough space to brew \(amount) ml of coffee. Only \(remainingSpace) ml available.")
+        }
+    }
+}
+
+var coffeeMachine = CoffeeMachine(coffeeAmount: 200, maxCapacity: 500)
+coffeeMachine.brewCoffee(amount: 300)
+// Output: "Not enough space to brew 300 ml of coffee. Only 300 ml available."
+
+coffeeMachine.brewCoffee(amount: 100)
+// Output: "Brewing 100 ml of coffee. Enjoy your coffee!"
+
+print(coffeeMachine.coffeeAmount)
+// Output: 300
+{% endhighlight swift %}
+
+Without the mutating keyword, the brewCoffee(amount:) method would not be allowed to modify the coffeeAmount property of the CoffeeMachine. The mutating keyword is required in this scenario because the CoffeeMachine struct is a value type (struct) in Swift. The mutating function is said to be able to modify the state of the struct.
+
+<p><b>6. Throwing Functions</b></p>
+Throwing functions is Swift's way of handling errors in a structured and graceful manner during the execution of code.
+
+Suppose a function called brewCoffee takes an optional parameter coffeeBeans. This function simulates brewing coffee by grinding the coffee beans. However, if the coffee beans are nil, it means there are no coffee beans to brew, and we want to throw an error.
+
+{% highlight swift %}
+enum CoffeeError: Error {
+    case noCoffeeBeans
+}
+
+func brewCoffee(coffeeBeans: String?) throws -> String {
+    guard let beans = coffeeBeans else {
+        throw CoffeeError.noCoffeeBeans
+    }
+    return "Enjoy your brewed coffee with \(beans)!"
+}
+
+do {
+    let coffeeResult = try brewCoffee(coffeeBeans: "Arabica")
+    print(coffeeResult)
+} catch CoffeeError.noCoffeeBeans {
+    print("Error: No coffee beans available. Cannot brew coffee.")
+} catch {
+    print("Unknown error occurred: \(error)")
+}
+{% endhighlight swift %}
+
+ An enum called CoffeeError is defined, which represents the errors that can occur during the coffee brewing process. It has a single case noCoffeeBeans, which indicates that there are no coffee beans available to brew.
+
+The brewCoffee(coffeeBeans:) function is marked with throws, which means it can potentially throw an error. Inside the function, we use the guard statement to check if the coffeeBeans parameter is nil. If it is, we throw the CoffeeError.noCoffeeBeans error.
+
+When calling a throwing function, like brewCoffee(coffeeBeans:), you must use the try keyword to indicate that we are aware of the possibility of an error being thrown. Here, we use try when calling brewCoffee(coffeeBeans:), and we handle the error using a do-catch block.
+
+If the function throws an error, it will be caught in the catch block based on the appropriate error type. If noCoffeeBeans error is thrown, a message is printed to indicate no coffee beans available. Otherwise, we print a message for unknown errors.
