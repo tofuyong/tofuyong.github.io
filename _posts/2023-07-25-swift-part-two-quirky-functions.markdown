@@ -161,6 +161,4 @@ do {
 
 The brewCoffee(coffeeBeans:) function is marked with throws, which means it can potentially throw an error. Inside the function, we use the guard statement to check if the coffeeBeans parameter is nil. If it is, we throw the CoffeeError.noCoffeeBeans error.
 
-When calling a throwing function, like brewCoffee(coffeeBeans:), you must use the try keyword to indicate that we are aware of the possibility of an error being thrown. Here, we use try when calling brewCoffee(coffeeBeans:), and we handle the error using a do-catch block.
-
-If the function throws an error, it will be caught in the catch block based on the appropriate error type. If noCoffeeBeans error is thrown, a message is printed to indicate no coffee beans available. Otherwise, we print a message for unknown errors.
+When calling a throwing function, the try keyword is necessary to indicate that we are aware of the possibility of an error being thrown. Use try when calling brewCoffee(coffeeBeans:), and handle the error using a do-catch block. If the function throws an error, it will be caught in the catch block based on the appropriate error type. 
