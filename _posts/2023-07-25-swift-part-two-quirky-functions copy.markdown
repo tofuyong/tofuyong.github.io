@@ -14,7 +14,6 @@ Functions in Swift can have default parameters. In the example below, the quanti
 {% highlight swift %}
 func orderCoffee(_ coffeeType: String, _ quantity: Int = 1) {
     print("Preparing \(quantity) cup(s) of \(coffeeType)...")
-    // Add code to prepare the coffee here
     print("Your \(coffeeType) is ready!")
 }
 
@@ -92,7 +91,7 @@ setAge(for: "Brunello di Montalcino", to: 25)
 The function becomes readable as a standard English statement: “Set age for Brunello di Montalcino to 25”. Using both internal and external labels is not a must, although our functions read more naturally when we have them. I'm quite amused by Swift's attempt to connect with the human programmer.
 
 <p><b>5. Mutating Functions</b></p>
-A mutating function is a special function that defined within a value type (such as a struct or enum) and is used to modify the properties of that value type. By default, functions defined within a value type are not allowed to modify the properties of the value type, but by marking a function as mutating, we are indicating that the function is able to modify the instance it is called on.
+A mutating function is a special function defined within a value type (such as a struct or enum) and is used to modify the properties of that value type. Otherwise, by default, functions defined within a value type are not allowed to modify the properties of the value type.
 
 Suppose we have a struct called CoffeeMachine, which has a coffeeAmount property representing the amount of coffee in the machine. We want to define a brewCoffee() method that simulates the brewing of fresh coffee (yum). The catch here is that the coffee machine has a fixed capacity, and we want to avoid exceeding it when making coffee.
 
@@ -161,4 +160,4 @@ do {
 
 The brewCoffee(coffeeBeans:) function is marked with throws, which means it can potentially throw an error. Inside the function, we use the guard statement to check if the coffeeBeans parameter is nil. If it is, we throw the CoffeeError.noCoffeeBeans error.
 
-When calling a throwing function, the try keyword is necessary to indicate that we are aware of the possibility of an error being thrown. Use try when calling brewCoffee(coffeeBeans:), and handle the error using a do-catch block. If the function throws an error, it will be caught in the catch block based on the appropriate error type. 
+When calling a throwing function, the try keyword is necessary to indicate that we are aware of the possibility of an error being thrown. Use try when calling brewCoffee(coffeeBeans:), and handle the error using a do-catch block. If the function throws an error, it will be caught in the catch block based on the error type. 

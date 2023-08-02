@@ -5,10 +5,13 @@ date:   2023-07-20 10:00:00 +0800
 categories: programming
 ---
 <p><i>
-In this four-part series, I attempt to journal some cool things I learnt about Swift, the iOS development language. I'm with the iOS development team in my new role and will have to pick up this language. My mentor at work told me that, "All languages are the same in semantics, they just differ in syntax." Really? I am frankly sceptical. Well, I am going to find out for myself. 
+In this four-part series, I attempt to journal some cool things I learnt about Swift, the native iOS development language. I've been deployed to the mobile development team in my new role and will have to pick up Swift. My mentor at work told me that, "All languages are the same in semantics, they just differ in syntax." Really? I am frankly sceptical. Well, I am going to find out for myself. 
 </i></p>
 <p><i>
-Having been trained in Java as my primary programming language prior, Swift, from what I've gathered so far, seems like a different ball game altogether. I am frankly feeling rather intimidated by how expressive it is, bordering on being almost too wild. It will understandably be impossible to write about every single feature of Swift, so I will mostly document features that are new to me, that I did not learn in Java. 
+Having been trained in Java as my primary programming language prior, Swift, from what I've gathered so far, seems like a different ball game altogether. I am frankly feeling rather intimidated by how expressive it is, bordering on being almost too wild. It will understandably be impossible to write about every single feature of such a rich language, so I will focus on documenting features that are new or quirky. 
+</i></p>
+<p><i>
+That also means getting up to speed with using Xcode. Goodbye for now beloved VS Code.
 </i></p>
 <p><i>
 I am currently learning from 'Swift Apprentice - Beginning Programming with Swift' (Seventh Edition) by the raywenderlich Tutorial Team. This book was recommended to me by an iOS developer on my team. 
@@ -89,17 +92,58 @@ var needCoffee = true
 needCoffee.toggle() // toggles the value of needCoffee from 'true' to 'false'
 {% endhighlight swift %}
 
-<p><b>6. The Nil Coalescing Operator</b></p>
-Swift's nil coalescing operator denoted by ?? is a handy way to unwrap an optional. We can use it to get a value out of the optional no matter what. An example of how it can be used:
+<p><b>6. A few ways to unwrap Optionals</b></p>
+Method 1: Optional Binding (if let)
+Optional binding safely checks if the optional contains a value and, if so, assigns it to a new constant or variable (unwrappedCoffee) within the scope of the if-let block. If the optional is nil, then the else block will be executed.
 
 {% highlight swift %}
-var optionalInt: Int? = nil
-var mustHaveResult = optionalInt ?? 0
-print(mustHaveResult) // Prints 0 if the optional has no value
+let coffee: String? = nil
+if let unwrappedCoffee = coffee {
+  print("Drinking \(unwrappedCoffee) today!")
+} else {
+  print("No coffee today") 
+}
+{% endhighlight swift %}
+
+Method 2: Using the guard clause (guard let)
+An alternative to if let is guard let, which also unwraps optionals. The major difference between if let and guard let is that the unwrapped optional remains usable after the guard code.
+
+{% highlight swift %}
+func coffeeOrder(coffee: String?) {
+    guard let coffee = coffee else {
+        print("No coffee for me today.")
+        return
+    }
+    print("I ordered a \(coffee) today.")
+}
+
+let myCoffeeToday = "flat white"
+coffeeOrder(coffee: myCoffeeToday)
+
+// Output: I ordered a flat white today.
+{% endhighlight swift %}
+
+Method 3: Forced unwrapping (!)
+Forced unwrapping is the riskiest way to unwrap an optional; use it only when you are 100% sure the optional returns a value. The ! operator forcefully unwraps the optional value, assuming that it contains a value. If the optional is nil, a runtime error will occur, causing the app to crash.
+
+{% highlight swift %}
+let coffee: String? = "Cappuccino"
+let unwrappedCoffee = coffee! // Using ! for forced unwrapping
+print("Forced Unwrapping: \(unwrappedCoffee)") // Output: "Forced Unwrapping: Cappuccino"
+{% endhighlight swift %}
+
+Method 4: Nil coalescing operator (??)
+A fancy name for something denoted by two question marks. The nil coalescing operator is a handy way to unwrap an optional. We can use it to get a value out of the optional no matter what. An example of how it can be used:
+
+{% highlight swift %}
+let coffee: String? = nil
+let defaultCoffee = "Espresso"
+let unwrappedCoffee = coffee ?? defaultCoffee
+print("Nil Coalescing: \(unwrappedCoffee)") // Output: "Nil Coalescing: Espresso"
 {% endhighlight swift %}
 
 <p><b>7. Countable Ranges</b></p>
-Countable Ranges represent a sequence of <b>countable integers</b>. There are two types of Countable Ranges, open and half-open. One thing to remember is that ranges must always be increasing.
+Countable Ranges represent a sequence of <b>countable integers</b>. There are two types of countable ranges - open and half-open. One thing to remember is that ranges must always be increasing.
 
 {% highlight swift %}
 // Countable closed range
@@ -181,4 +225,4 @@ default:
 }
 {% endhighlight swift %}
 
-I'm excited to see how this plays out in actual production code, as I can imagine it being a super powerful feature when paired with switch statements, that allows for the handling of multiple cases concisely without having to write separate conditions for every possible value. 
+I'm excited to see how this plays out in actual production code, as I can imagine it being a powerful feature when paired with switch statements, that allows for the handling of multiple cases concisely without having to write separate conditions for every possible value. 
