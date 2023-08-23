@@ -5,7 +5,7 @@ date:   2023-07-20 10:00:00 +0800
 categories: programming
 ---
 <p><i>
-Swift functions are so full of quirks. At this point, 1 week into Swift, I am ambivalent about whether I love Swift or hate it.
+Swift functions are so full of quirks. At this point, 1 week into Swift, I am ambivalent about whether I love Swift or hate it. Today, I attempt to chronicle interesting bits of Swift functions that I discovered.
 </i></p>
 
 <p><b>Quirky Swift functions</b></p>
@@ -60,7 +60,7 @@ Ordering Americano for everyone.
 By making that parameter variadic, a whole range of additional functionality is availed without having to change the way the function is called – how useful!
 
 <p><b>4. External & Internal Parameter labels</b></p>
-As if one name for one parameter is not enough, I find it rather cute that Swift allows us to provide two names for each parameter. One is to be used externally when calling the function, and the second one to be used internally inside the function. This is done by writing two names, separated by a space like this:
+As if one parameter name is not enough, Swift allows two aliases for each parameter. The first (left hand side) is to be used externally when calling the function, and the second (right hand side) is to be used internally inside the function. This is done by writing two names, separated by a space like this:
 
 {% highlight swift %}
 func sayHello(to name: String) {
@@ -68,32 +68,26 @@ func sayHello(to name: String) {
 }
 {% endhighlight swift %}
 
-The parameter is called 'to name', which means externally it’s called 'to', but internally it’s called 'name'. This gives variables a sensible name inside the function, and also means calling the function reads more naturally:
+The parameter is given two aliases - 'to' and 'name'. This means that externally it’s called using 'to', but internally it’s called using 'name'. This gives variables a sensible name inside the function.
 
 {% highlight swift %}
-sayHello(to: "Vino")
-{% endhighlight swift %}
-
-Swift even takes it a step further by allowing us to write our labels twice, like:
-
-{% highlight swift %}
-func setAge(for person: String, to value: Int) {
-    print("\(person) is now \(value)")
+func setAge(for wine: String, to value: Int) {
+    print("\(wine) is now \(value)")
 }
 {% endhighlight swift %}
 
-When we call the function: 
+When we call the function externally: 
 
 {% highlight swift %}
 setAge(for: "Brunello di Montalcino", to: 25)
 {% endhighlight swift %}
 
-The function becomes readable as a standard English statement: “Set age for Brunello di Montalcino to 25”. Using both internal and external labels is not a must, although our functions read more naturally when we have them. I'm quite amused by Swift's attempt to connect with the human programmer.
+The function becomes readable as a standard English statement: “Set age for Brunello di Montalcino to 25”. Using both internal and external labels is not a must, although functions read more naturally when we have them. I'm quite amused by Swift's attempt to connect with the human programmer.
 
 <p><b>5. Mutating Functions</b></p>
 A mutating function is a special function defined within a value type (such as a struct or enum) and is used to modify the properties of that value type. Otherwise, by default, functions defined within a value type are not allowed to modify the properties of the value type.
 
-Suppose we have a struct called CoffeeMachine, which has a coffeeAmount property representing the amount of coffee in the machine. We want to define a brewCoffee() method that simulates the brewing of fresh coffee (yum). The catch here is that the coffee machine has a fixed capacity, and we want to avoid exceeding it when making coffee.
+The code below represents a struct called CoffeeMachine, which has a coffeeAmount property representing the amount of coffee in the machine. A brewCoffee() method simulates the brewing of fresh coffee (yum). The catch here is that the coffee machine has a fixed capacity, and we want to avoid exceeding it when making coffee.
 
 {% highlight swift %}
 struct CoffeeMachine {
@@ -132,7 +126,7 @@ Without the mutating keyword, the brewCoffee(amount:) method would not be allowe
 <p><b>6. Throwing Functions</b></p>
 Throwing functions is Swift's way of handling errors in a structured and graceful manner during the execution of code.
 
-Suppose a function called brewCoffee takes an optional parameter coffeeBeans. This function simulates brewing coffee by grinding the coffee beans. However, if the coffee beans are nil, it means there are no coffee beans to brew, and we want to throw an error.
+The below function called brewCoffee takes an optional parameter coffeeBeans. This function simulates brewing coffee by grinding the coffee beans. However, if the coffee beans are nil, it means there are no coffee beans to brew, and we want to throw an error.
 
 {% highlight swift %}
 enum CoffeeError: Error {
@@ -156,8 +150,8 @@ do {
 }
 {% endhighlight swift %}
 
- An enum called CoffeeError is defined, which represents the errors that can occur during the coffee brewing process. It has a single case noCoffeeBeans, which indicates that there are no coffee beans available to brew.
+An enum called CoffeeError is defined, which represents the errors that can occur during the coffee brewing process. It has a single case noCoffeeBeans, which indicates that there are no coffee beans available to brew.
 
-The brewCoffee(coffeeBeans:) function is marked with throws, which means it can potentially throw an error. Inside the function, we use the guard statement to check if the coffeeBeans parameter is nil. If it is, we throw the CoffeeError.noCoffeeBeans error.
+The brewCoffee(coffeeBeans:) function is marked with throws, which means it can potentially throw an error. Inside the function, we use the guard statement to check if the coffeeBeans parameter is nil. If it is, we throw the customised CoffeeError.noCoffeeBeans error.
 
-When calling a throwing function, the try keyword is necessary to indicate that we are aware of the possibility of an error being thrown. Use try when calling brewCoffee(coffeeBeans:), and handle the error using a do-catch block. If the function throws an error, it will be caught in the catch block based on the error type. 
+When calling a throwing function, the try keyword is necessary to indicate that we are aware of the possibility of an error being thrown, and handle the error using a do-catch block. If the function throws an error, it will be caught in the catch block based on the error type. 

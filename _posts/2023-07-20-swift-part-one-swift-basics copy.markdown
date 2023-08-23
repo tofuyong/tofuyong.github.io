@@ -5,13 +5,13 @@ date:   2023-07-20 10:00:00 +0800
 categories: programming
 ---
 <p><i>
-In this four-part series, I attempt to journal some cool things I learnt about Swift, the native iOS development language. I've been deployed to the mobile development team in my new role and will have to pick up Swift. My mentor at work told me that, "All languages are the same in semantics, they just differ in syntax." Really? I am frankly sceptical. Well, I am going to find out for myself. 
+In this three-part series, I attempt to journal some cool things I learnt about Swift, the native iOS development language. I've been deployed to the mobile development team in my new role and will have to pick up Swift. My mentor at work told me that, "All languages are the same in semantics, they just differ in syntax." Really? I am frankly sceptical. Well, I am going to find out for myself. 
 </i></p>
 <p><i>
-Having been trained in Java as my primary programming language prior, Swift, from what I've gathered so far, seems like a different ball game altogether. I am frankly feeling rather intimidated by how expressive it is, bordering on being almost too wild. It will understandably be impossible to write about every single feature of such a rich language, so I will focus on documenting features that are new or quirky. 
+Having been trained in Java as my primary programming language prior, Swift, from what I've gathered thus far (and that is not very far given my incursion into Swift is in its infantile stages), seems like a different ball game altogether. I am feeling rather intimidated by how expressive it is, bordering on being almost too wild. It will understandably be impossible to write about every single feature of such an expressively rich language, so I will focus on documenting features that I find quirky or can't wrap my head around. 
 </i></p>
 <p><i>
-That also means getting up to speed with using Xcode. Goodbye for now beloved VS Code.
+This also means getting up to speed with using Xcode. Goodbye for now, my reliable and beloved friend, VSCode.
 </i></p>
 <p><i>
 I am currently learning from 'Swift Apprentice - Beginning Programming with Swift' (Seventh Edition) by the raywenderlich Tutorial Team. This book was recommended to me by an iOS developer on my team. 
@@ -19,7 +19,7 @@ I am currently learning from 'Swift Apprentice - Beginning Programming with Swif
 
 
 <p><b>10 Cool Things about Swift Basics</b></p>
-<p><b>1. Commenting on codes</b></p>
+<p><b>1. Nested Comments</b></p>
 In Swift, comments can be left alongside code using // and /* */, the latter of which span multiple lines. Nothing unique there. But what I discovered was a cool feature that permits the nesting of comments! A comment within a comment (think <i>Inception</i>) like this:
 
 {% highlight swift %}
@@ -32,7 +32,7 @@ What coffee shall I have today?
 */
 {% endhighlight swift %}
 
-Another cool feature is the triple forward slash (///) which documents a function. A quick way to do this is to highlight the function to be documented and hit Option + Command keys. Select 'add document' and Xcode will create a template for adding the documentation. Once documentation is complete, holding the Option key and clicking on function will display the documentation which is super useful.
+Another cool feature is the triple forward slash (///) which documents a function. A quick way to do this is to highlight the function to be documented and hit Option + Command keys. Select 'add document' and Xcode will create a template for adding the documentation. Subsequent holding of Option key while clicking on function displays the documentation which is super useful. 
 
 {% highlight swift %}
 /// Prepares a cup of coffee with the specified parameters.
@@ -48,8 +48,10 @@ let coffeeResult = prepareCoffee(coffeeType: "Espresso", quantity: 2)
 print(coffeeResult)
 {% endhighlight swift %}
 
+I did find out later on that developers do not comment on production codes, so it's likely I will never use it.
+
 <p><b>2. String Interpolation</b></p>
-While string interpolation is not unique to Swift, it'll be helpful to quickly get used to its syntax as it's used frequently for creating dynamic strings by combining values with static text. 
+While string interpolation is not unique to Swift, it'll be helpful to quickly get used to hitting <i>backslash-open bracket<i> to combine values with static text to create dynamic strings.
 
 {% highlight swift %}
 let name = "Tofu"
@@ -60,7 +62,7 @@ print(message)
 {% endhighlight swift %}
 
 <p><b>3. Type Conversions</b></p>
-Type conversions can be done in 3 ways in Swift. For instance, if I am trying to convert an Integer of 3 into a Double, I could write either of the following lines of code:
+Type conversions can be done in 3 ways in Swift. For instance, conversion of an Integer of 3 into a Double can be done by writing either of the following lines of code:
 
 {% highlight swift %}
 let doubleValue = Double(3)
@@ -69,7 +71,7 @@ let doubleValue = 3 as Double
 {% endhighlight swift %}
 
 <p><b>4. Type Alias</b></p>
-This is a pretty neat feature that allows me to create my own type, which is an alias of another type. 
+Type Alias is a neat feature that allows creation of a customised type, which is an alias of another type. 
 
 {% highlight swift %}
 typealias CupOfCoffee = String
@@ -93,8 +95,10 @@ needCoffee.toggle() // toggles the value of needCoffee from 'true' to 'false'
 {% endhighlight swift %}
 
 <p><b>6. A few ways to unwrap Optionals</b></p>
-Method 1: Optional Binding (if let)
-Optional binding safely checks if the optional contains a value and, if so, assigns it to a new constant or variable (unwrappedCoffee) within the scope of the if-let block. If the optional is nil, then the else block will be executed.
+Optionals are extensively used in Swift programming, so it is paramount to learn how to unwrap them. Turns out, there are several ways to do so. 
+
+<p>Method 1: Optional Binding (if let)</p>
+<p>Optional binding safely checks if the optional contains a value and, if so, assigns it to a new constant or variable (unwrappedCoffee) within the scope of the if-let block. If the optional is nil, then the else block will be executed.</p>
 
 {% highlight swift %}
 let coffee: String? = nil
@@ -105,14 +109,14 @@ if let unwrappedCoffee = coffee {
 }
 {% endhighlight swift %}
 
-Method 2: Using the guard clause (guard let)
-An alternative to if let is guard let, which also unwraps optionals. The major difference between if let and guard let is that the unwrapped optional remains usable after the guard code.
+<p>Method 2: Using the guard clause (guard let)</p>
+<p>An alternative to if let is guard let, which also unwraps optionals. The major difference between if let and guard let is that the unwrapped optional remains usable after the guard code.</p>
 
 {% highlight swift %}
 func coffeeOrder(coffee: String?) {
     guard let coffee = coffee else {
-        print("No coffee for me today.")
-        return
+      print("No coffee for me today.")
+      return
     }
     print("I ordered a \(coffee) today.")
 }
@@ -123,27 +127,31 @@ coffeeOrder(coffee: myCoffeeToday)
 // Output: I ordered a flat white today.
 {% endhighlight swift %}
 
-Method 3: Forced unwrapping (!)
-Forced unwrapping is the riskiest way to unwrap an optional; use it only when you are 100% sure the optional returns a value. The ! operator forcefully unwraps the optional value, assuming that it contains a value. If the optional is nil, a runtime error will occur, causing the app to crash.
+<p>Method 3: Forced unwrapping (!)</p>
+<p>Forced unwrapping is the riskiest way to unwrap an optional; used only when there is 100% certainty that the optional returns a value. The ! operator forcefully unwraps the optional value. And what if the optional is nil? Then be prepared for a runtime error a.k.a app crashes.</p>
 
 {% highlight swift %}
 let coffee: String? = "Cappuccino"
 let unwrappedCoffee = coffee! // Using ! for forced unwrapping
-print("Forced Unwrapping: \(unwrappedCoffee)") // Output: "Forced Unwrapping: Cappuccino"
+print("Forced Unwrapping: \(unwrappedCoffee)") 
+// Output: "Forced Unwrapping: Cappuccino"
 {% endhighlight swift %}
 
-Method 4: Nil coalescing operator (??)
-A fancy name for something denoted by two question marks. The nil coalescing operator is a handy way to unwrap an optional. We can use it to get a value out of the optional no matter what. An example of how it can be used:
+<p>Method 4: Nil coalescing operator (??)</p>
+<p>A bewildering name for something denoted by two question marks. The nil coalescing operator is however, a handy way of unwrapping an optional. It is used to get a value out of the optional no matter what, without which, a default value will be given.</p>
 
 {% highlight swift %}
 let coffee: String? = nil
 let defaultCoffee = "Espresso"
 let unwrappedCoffee = coffee ?? defaultCoffee
-print("Nil Coalescing: \(unwrappedCoffee)") // Output: "Nil Coalescing: Espresso"
+print("Nil Coalescing: \(unwrappedCoffee)") 
+// Output: "Nil Coalescing: Espresso"
 {% endhighlight swift %}
 
+What I don't get is - why of all words, 'coalescing'? In English, 'coalescing' means to merge. Does it imply that we are merging a 'nil' with a provided default value? Food for thought.
+
 <p><b>7. Countable Ranges</b></p>
-Countable Ranges represent a sequence of <b>countable integers</b>. There are two types of countable ranges - open and half-open. One thing to remember is that ranges must always be increasing.
+Countable Ranges represent a sequence of <b>countable integers</b>. There are two types of countable ranges - open and half-open. One thing to take note is that ranges must always be increasing.
 
 {% highlight swift %}
 // Countable closed range
@@ -157,7 +165,19 @@ for j in 1..<5 {
 }
 {% endhighlight swift %}
 
-<p><b>8. Control Flow</b></p>
+<p><b>8. Stride (from:to:by:)</b></p>
+Countable ranges are limited in that they must always increase by one. An alternative to that is the Swift stride which offers  more flexibility and can be used as such:
+
+{% highlight swift %}
+// Print even numbers from 0 to 10 (inclusive)
+for number in stride(from: 0, through: 10, by: 2) {
+  print(number)
+}
+
+// Output: 0 2 4 6 8 10
+{% endhighlight swift %}
+
+<p><b>9. Control Flow</b></p>
 When it comes to control flow, Swift's for loop is less verbose than Java's.
 
 {% highlight swift %}
@@ -172,7 +192,7 @@ for (int i = 1; i <= count; i++) {
 }
 {% endhighlight swift %}
 
-Interestingly, Swift has a useful <b>where</b> clause that Java lacks which greatly improves how concise the code is.
+Interestingly, Swift has a useful <b>where</b> clause which greatly improves code concision.
 
 {% highlight swift %}
 // where clause in action in Swift
@@ -186,7 +206,7 @@ for row in 0..<8 where row % 2 == 1 {
 sum = 0
 for row in 0..<8 {
 if row % 2 == 0 {
-continue
+  continue
   }
   for column in 0..<8 {
     sum += row * column
@@ -194,20 +214,8 @@ continue
 }
 {% endhighlight swift %}
 
-<p><b>9. Stride (from:to:by:)</b></p>
-Countable ranges are limited in that they must always increase by one. The Swift stride offers much more flexibility and can be used as such:
-
-{% highlight swift %}
-// Print even numbers from 0 to 10 (inclusive)
-for number in stride(from: 0, through: 10, by: 2) {
-    print(number)
-}
-
-// Output: 0 2 4 6 8 10
-{% endhighlight swift %}
-
 <p><b>10. The Wildcard Underscore</b></p>
-The wildcard underscore in Swift can match anything without revealing its true identity. It's used when we don't explicitly want to care about certain values and its usefulness is captured in the 3D example below.
+And finally, if there is one thing that hurts my head trying to understand it is hands-down the wildcard underscore. In Swift, it can be used to match anything without revealing its true identity. It is used when we do not want to care about certain values and let's introduce more brain jiggle in the 3D example below.
 
 {% highlight swift %}
 let coordinates = (x: 3, y: 4, z: 5)
@@ -225,4 +233,4 @@ default:
 }
 {% endhighlight swift %}
 
-I'm excited to see how this plays out in actual production code, as I can imagine it being a powerful feature when paired with switch statements, that allows for the handling of multiple cases concisely without having to write separate conditions for every possible value. 
+I'm excited to see how this plays out in actual production code, as I can imagine it being a powerful feature when paired with switch statements, that allows for the handling of multiple cases without having to write separate conditions for every possible value. 
